@@ -31,8 +31,8 @@ const Footer = memo((props) => {
       </span>
 
       <ul className='filters'>
-        {FilterBtn.map(btn => (
-          <FilterButton {...btn} /> 
+        {FilterBtn.map((btn) => (
+          <FilterButton key={`btn${btn.title}`} {...btn} />
         ))}
       </ul>
       <button className='clear-completed'>Clear completed</button>

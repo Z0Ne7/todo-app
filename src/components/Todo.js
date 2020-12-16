@@ -1,13 +1,51 @@
-import React, { memo } from 'react';
+import React, { memo, useState } from 'react';
 
 const Todo = memo((props) => {
+  const { todo, todoEditingId, getTodoEditingId, onEditTodo, index, markCompleted} = props;
+  const [text, setText] = useState(todo.text);
+  const isEditing = todoEditingId === todo.id;
+  const editTodo = () => {
+    onEditTodo(
+      {
+        ...todo,
+        text,
+      },
+      index
+    );
+  };
   return (
-    <li>
-     <div className='view'>
-       <input className='toggle' />
-       <label>To do</label>
-       <button className='destroy'></button>
-     </div>
+    <li
+      className={`${isEditing ? 'editing' : ''} ${
+        todo.isCompleted ? 'completed' : ''
+      }`}
+    >
+      {!isEditing ? (
+        <div className='view'>
+          <input
+            className='toggle'
+            type='checkbox'
+            checked={todo.isCompleted}
+            onChange={() => markCompleted(todo.id)}
+          />
+          <label onDoubleClick={() => getTodoEditingId(todo.id)}>
+            {todo.text}
+          </label>
+          <button className='destroy'></button>
+        </div>
+      ) : (
+        <input
+          className='edit'
+          type='text'
+          value={text}
+          onChange={(e) => setText(e.target.value)}
+          onBlur={editTodo}
+          onKeyPress={(e) => {
+            if (e.key === 'Enter') {
+              editTodo();
+            }
+          }}
+        />
+      )}
     </li>
   );
 });
