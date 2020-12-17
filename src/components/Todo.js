@@ -1,7 +1,15 @@
 import React, { memo, useState } from 'react';
 
 const Todo = memo((props) => {
-  const { todo, todoEditingId, getTodoEditingId, onEditTodo, index, markCompleted} = props;
+  const {
+    todo,
+    todoEditingId,
+    getTodoEditingId,
+    onEditTodo,
+    index,
+    markCompleted,
+    removeTodo,
+  } = props;
   const [text, setText] = useState(todo.text);
   const isEditing = todoEditingId === todo.id;
   const editTodo = () => {
@@ -30,7 +38,10 @@ const Todo = memo((props) => {
           <label onDoubleClick={() => getTodoEditingId(todo.id)}>
             {todo.text}
           </label>
-          <button className='destroy'></button>
+          <button
+            className='destroy'
+            onClick={() => removeTodo(todo.id)}
+          ></button>
         </div>
       ) : (
         <input

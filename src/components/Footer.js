@@ -1,32 +1,33 @@
 import React, { memo } from 'react';
 
 const Footer = memo((props) => {
+  const { status, setStatusFilter, numOfTodos, numOfTodosLeft, clearCompleted } = props;
   const FilterBtn = [
     {
       title: 'All',
-      isActive: true,
-      onClick: () => {},
+      isActive: status === 'ALL',
+      onClick: () => setStatusFilter('ALL'),
       link: '',
     },
     {
       title: 'Active',
-      isActive: false,
-      onClick: () => {},
+      isActive: status === 'ACTIVE',
+      onClick: () => setStatusFilter('ACTIVE'),
       link: 'active',
     },
     {
       title: 'Completed',
-      isActive: false,
-      onClick: () => {},
+      isActive: status === 'COMPLETED',
+      onClick: () => setStatusFilter('COMPLETED'),
       link: 'completed',
     },
   ];
   return (
     <footer className='footer'>
       <span className='todo-count'>
-        <strong>2</strong>
+        <strong>{numOfTodosLeft}</strong>
         <span> </span>
-        <span>items</span>
+        <span>{numOfTodosLeft <= 1 ? 'item' : 'items'}</span>
         <span> left</span>
       </span>
 
@@ -35,7 +36,9 @@ const Footer = memo((props) => {
           <FilterButton key={`btn${btn.title}`} {...btn} />
         ))}
       </ul>
-      <button className='clear-completed'>Clear completed</button>
+      {numOfTodos > numOfTodosLeft && (
+        <button className='clear-completed' onClick={clearCompleted}>Clear completed</button>
+      )}
     </footer>
   );
 });

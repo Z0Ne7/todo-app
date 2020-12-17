@@ -2,11 +2,11 @@ import React, { memo } from 'react';
 import Todo from './Todo';
 
 const TodoList = memo((props) => {
-  const { todosList, isCheckedAll } = props;
+  const { todosList, isCheckedAll, checkAllTodo } = props;
   return (
     <section className='main'>
-      <input className='toggle-all' type='checkbox' checked={isCheckedAll}/>
-      <label htmlFor='toggle-all'></label>
+      <input className='toggle-all' type='checkbox' checked={isCheckedAll} />
+      <label htmlFor='toggle-all' onClick={checkAllTodo}></label>
       <ul className='todo-list'>
         {todosList.map((todo, index) => (
           <Todo key={`todo${todo.id}`} {...{ todo }} {...props} index={index} />
