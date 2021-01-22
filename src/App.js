@@ -106,12 +106,12 @@ class App extends React.PureComponent {
     const { todosList, todoEditingId, isCheckedAll, status } = this.state;
     return (
       <div className='todoapp'>
-        <Header isCheckedAll={isCheckedAll} addTodo={this.addTodo} />
+        <Header isCheckedAll={isCheckedAll} />
         <TodoList
           todosList={filterByStatus(todosList, status)}
-          todoEditingId={todoEditingId}
-          getTodoEditingId={this.getTodoEditingId}
-          onEditTodo={this.onEditTodo}
+          // todoEditingId={todoEditingId}
+          // getTodoEditingId={this.getTodoEditingId}
+          // onEditTodo={this.onEditTodo}
           markCompleted={this.markCompleted}
           isCheckedAll={isCheckedAll}
           checkAllTodo={this.checkAllTodo}

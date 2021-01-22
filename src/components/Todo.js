@@ -1,4 +1,6 @@
 import React, { memo, useState } from 'react';
+import { connect, useDispatch } from 'react-redux';
+import { onEditTodo, getTodoEditingId } from '../actions';
 
 const Todo = memo((props) => {
   const {
@@ -10,16 +12,13 @@ const Todo = memo((props) => {
     markCompleted,
     removeTodo,
   } = props;
+  // console.log(todo);
+  const dispatch = useDispatch()
   const [text, setText] = useState(todo.text);
   const isEditing = todoEditingId === todo.id;
-  const editTodo = () => {
-    onEditTodo(
-      {
-        ...todo,
-        text,
-      },
-      index
-    );
+  const editTodo = e => {
+    e.preventDefault();
+    dispatch(onEditTodo(text,index))
   };
   return (
     <li
@@ -44,21 +43,28 @@ const Todo = memo((props) => {
           ></button>
         </div>
       ) : (
-        <input
+       <form onSubmit={editTodo}>
+       <input
           className='edit'
           type='text'
           value={text}
           onChange={(e) => setText(e.target.value)}
           onBlur={editTodo}
-          onKeyPress={(e) => {
-            if (e.key === 'Enter') {
-              editTodo();
-            }
-          }}
         />
+       </form>
       )}
     </li>
   );
 });
+const mapStateToProps = (state, props) => {
+  return {
+    todoEditingId: state.todos.todoEditingId,
+    ...props,
+  };
+};
 
-export default Todo;
+const mapDispatchToProps = {
+  onEditTodo,
+  getTodoEditingId,
+};
+export default connect(mapStateToProps, mapDispatchToProps)(Todo);

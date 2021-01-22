@@ -1,8 +1,10 @@
 import React, { memo } from 'react';
 import Todo from './Todo';
+import { connect } from 'react-redux';
 
 const TodoList = memo((props) => {
   const { todosList, isCheckedAll, checkAllTodo } = props;
+  console.log(todosList);
   return (
     <section className='main'>
       <input className='toggle-all' type='checkbox' checked={isCheckedAll} />
@@ -16,4 +18,10 @@ const TodoList = memo((props) => {
   );
 });
 
-export default TodoList;
+const mapStateToProps = (state) => {
+  return {
+    todosList: state.todos.todosList,
+  };
+};
+
+export default connect(mapStateToProps)(TodoList);

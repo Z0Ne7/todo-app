@@ -1,15 +1,25 @@
 import React, { memo, useState } from 'react';
+import { useDispatch } from 'react-redux';
+import * as action from '../actions';
 
 const Header = memo((props) => {
+  const dispatch = useDispatch();
   const [text, setText] = useState('');
   const { addTodo, isCheckedAll } = props;
   const onAddTodo = (e = {}) => {
     if (e.key === 'Enter' && text) {
-      addTodo({
-        id: new Date().valueOf(),
-        text,
-        isCompleted: false,
-      });
+      dispatch(
+        action.addTodo({
+          id: new Date().valueOf(),
+          text,
+          isCompleted: false,
+        })
+      );
+      // addTodo({
+      //   id: new Date().valueOf(),
+      //   text,
+      //   isCompleted: false,
+      // });
       setText('');
     }
   };
